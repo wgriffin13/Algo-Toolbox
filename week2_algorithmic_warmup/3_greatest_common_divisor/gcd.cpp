@@ -12,9 +12,25 @@ int gcd_naive(int a, int b) {
   return current_gcd;
 }
 
+int gcd_fast(int a, int b) {
+  int big_num = a;
+  int small_num = b;
+  if (a < b) {
+    big_num = a;
+    small_num = b;
+  }
+  int remainder = big_num % small_num;
+  while (remainder != 0) {
+    big_num = small_num;
+    small_num = remainder;
+    remainder = big_num % small_num;
+  }
+  return small_num;
+}
+
 int main() {
   int a, b;
   std::cin >> a >> b;
-  std::cout << gcd_naive(a, b) << std::endl;
+  std::cout << gcd_fast(a, b) << std::endl;
   return 0;
 }
