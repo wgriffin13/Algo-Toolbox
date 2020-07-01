@@ -5,8 +5,26 @@ using std::vector;
 
 double get_optimal_value(int capacity, vector<int> weights, vector<int> values) {
   double value = 0.0;
-
+  int n = weights.size();
+  vector<double> v_w(n);
+  for (int i = 0; i < n; ++i) {
+    v_w[i] = (double)values[i] / weights[i];
+  }
   // write your code here
+  while (capacity > 0) {
+    double max_value = 0.0;
+    int idx = 0;
+    for (int i = 0; i < n; ++i) {
+      if (weights[i] > 0 && v_w[i] > max_value) {
+        max_value = v_w[i];
+        idx = i;
+      }
+    }
+    int weight_to_add = std::min(capacity, weights[idx]);
+    value = value + (double)values[idx] * weight_to_add / weights[idx];
+    weights[idx] = 0;
+    capacity -= weight_to_add;
+  }
 
   return value;
 }
