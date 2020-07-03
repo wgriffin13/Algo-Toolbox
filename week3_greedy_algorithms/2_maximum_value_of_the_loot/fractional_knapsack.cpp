@@ -13,12 +13,16 @@ double get_optimal_value(int capacity, vector<int> weights, vector<int> values) 
   // write your code here
   while (capacity > 0) {
     double max_value = 0.0;
-    int idx = 0;
+    int idx = -1;
     for (int i = 0; i < n; ++i) {
       if (weights[i] > 0 && v_w[i] > max_value) {
         max_value = v_w[i];
         idx = i;
       }
+    }
+    // Escape if there is nothing left to add
+    if (idx == -1) {
+      break;
     }
     int weight_to_add = std::min(capacity, weights[idx]);
     value = value + (double)values[idx] * weight_to_add / weights[idx];
