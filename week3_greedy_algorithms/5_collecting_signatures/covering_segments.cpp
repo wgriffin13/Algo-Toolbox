@@ -9,13 +9,30 @@ struct Segment {
   int start, end;
 };
 
+bool segmetSortFunction (Segment i,Segment j) { return (i.end < j.end); }
+
 vector<int> optimal_points(vector<Segment> &segments) {
   vector<int> points;
   //write your code here
-  for (size_t i = 0; i < segments.size(); ++i) {
-    points.push_back(segments[i].start);
-    points.push_back(segments[i].end);
+  // Find the segment with the smallest start
+  // Set the point to end of segment
+  // Remove all sements that have end <= point and start >= point
+  // Assuming sorted segments
+  std::sort (segments.begin(), segments.end(), segmetSortFunction);
+  points.push_back(segments[0].end);
+  size_t idx = 1;
+  while (idx < segments.size()) {
+    if (points.back() >= segments[idx].start && points.back() <= segments[idx].end) {
+      idx += 1;
+    } else {
+      points.push_back(segments[idx].end);
+      idx += 1;
+    }
   }
+  // for (size_t i = 0; i < segments.size(); ++i) {
+  //   points.push_back(segments[i].start);
+  //   points.push_back(segments[i].end);
+  // }
   return points;
 }
 
